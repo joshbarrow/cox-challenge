@@ -1,4 +1,4 @@
-import DatasetApi from '../dealer-vehicle-api/dataset'
+import DatasetApi from '../dealer-inventory-api/dataset'
 
 describe('DatasetApi', () => {
   describe('.getId', () => {

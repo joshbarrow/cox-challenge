@@ -1,5 +1,5 @@
-import VehicleApi from '../dealer-vehicle-api/vehicle'
-import DatasetApi from '../dealer-vehicle-api/dataset'
+import VehicleApi from '../dealer-inventory-api/vehicle'
+import DatasetApi from '../dealer-inventory-api/dataset'
 
 describe('VehicleApi', () => {
   describe('.index', () => {
