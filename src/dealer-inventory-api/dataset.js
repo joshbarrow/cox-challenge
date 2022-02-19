@@ -1,11 +1,11 @@
-import axios from 'axios'
 import DealerApi from './dealer'
 import VehicleApi from './vehicle'
+import Api from './api'
 
-export default class DatasetApi {
+export default class DatasetApi extends Api {
   static async getId() {
-    const response = await axios.get('http://api.coxauto-interview.com/api/datasetId')
-    return response.data.datasetId
+    const response = await this.get('datasetId')
+    return response.datasetId
   }
 
   static async inventory(datasetId) {
@@ -16,8 +16,7 @@ export default class DatasetApi {
   }
 
   static async validateInventory(datasetId, inventory) {
-    const response = await axios.post(`http://api.coxauto-interview.com/api/${datasetId}/answer`, inventory)
-    return response.data
+    return await this.post(`${datasetId}/answer`, inventory)
   }
 
   static async #dealerInventory(datasetId, vehicleIds) {

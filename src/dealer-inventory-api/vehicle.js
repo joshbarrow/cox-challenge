@@ -1,16 +1,12 @@
-import axios from 'axios'
-import DatasetApi from './dataset'
+import Api from './api'
 
-export default class VehicleApi {
+export default class VehicleApi extends Api {
   static async index(datasetId) {
-    const response = await axios.get(`http://api.coxauto-interview.com/api/${datasetId}/vehicles`)
-    return response.data.vehicleIds
+    const response = await this.get(`${datasetId}/vehicles`)
+    return response.vehicleIds
   }
 
   static async show(datasetId, vehicleId) {
-    const response = await axios.get(
-      `http://api.coxauto-interview.com/api/${datasetId}/vehicles/${vehicleId}`
-    )
-    return response.data
+    return await this.get(`${datasetId}/vehicles/${vehicleId}`)
   }
 }

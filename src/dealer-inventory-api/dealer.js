@@ -1,8 +1,7 @@
-import axios from 'axios'
+import Api from './api'
 
-export default class DealerApi {
+export default class DealerApi extends Api {
   static async show(datasetId, dealerId) {
-    const response = await axios.get(`http://api.coxauto-interview.com/api/${datasetId}/dealers/${dealerId}`)
-    return response.data
+    return await this.get(`${datasetId}/dealers/${dealerId}`)
   }
 }
