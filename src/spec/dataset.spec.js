@@ -10,7 +10,7 @@ describe("DatasetApi", () => {
   });
 
   describe(".inventory", () => {
-    it.only("returns the inventory of a particualr dataset", async () => {
+    it("returns the inventory of a particualr dataset", async () => {
       const datasetId = await DatasetApi.getId();
       const result = await DatasetApi.inventory(datasetId);
       expect(result.dealers.constructor).toBe(Array);
@@ -25,6 +25,15 @@ describe("DatasetApi", () => {
           expect(typeof vehicle.year).toBe("number");
         });
       });
+    });
+  });
+
+  describe(".validateInventory", () => {
+    it("returns successful response", async () => {
+      const datasetId = await DatasetApi.getId();
+      const inventory = await DatasetApi.inventory(datasetId);
+      const response = await DatasetApi.validateInventory(datasetId, inventory);
+      expect(response.success).toBe(true);
     });
   });
 });

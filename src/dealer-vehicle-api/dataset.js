@@ -20,6 +20,14 @@ export default class DatasetApi {
     return this.#normalizeDealerInventory(dealerAndVehicleData);
   }
 
+  static async validateInventory(datasetId, inventory) {
+    const response = await axios.post(
+      `http://api.coxauto-interview.com/api/${datasetId}/answer`,
+      inventory
+    );
+    return response.data;
+  }
+
   static async #dealerInventory(datasetId, vehicleIds) {
     const promises = [];
     for (const vehicleId of vehicleIds) {
