@@ -2,10 +2,10 @@ import axios from "axios";
 import DatasetApi from "./dataset";
 
 export default class DealerApi {
-  static async getDealer(datasetId) {
+  static async show(datasetId, dealerId) {
     const response = await axios.get(
-      `http://api.coxauto-interview.com/api/${datasetId}/vehicles`
+      `http://api.coxauto-interview.com/api/${datasetId}/dealers/${dealerId}`
     );
-    return response.data.vehicleIds;
+    return response.data;
   }
 }
