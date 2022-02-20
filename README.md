@@ -1,70 +1,117 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
+# Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `yarn install`
 
+Installs all dependencies for the project.
+
+### `yarn start`
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+### `yarn spec`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs all avaiable tests for the project
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Dealer Inventory API
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> I decided to use javascript to solve this challenge because of its powerful methods, specifically the Promise.all() method, which allowed me to iterate through multiple promises and return a single promise with the results. This significantly reduced the time needed to complete the challenge. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Dataset API
 
-### `npm run eject`
+### getId()
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```js
+import DatasetApi from './dealer-inventory-api/dataSet'
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+await DatasetApi.getId()
+//  7C0b7HDz2Qg
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### inventory(datasetId)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+import DatasetApi from './dealer-inventory-api/dataSet'
 
-## Learn More
+const datasetId = await DatasetApi.getId()
+await DatasetApi.inventory(datasetId)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+// {
+//   "dealers": [
+//     {
+//       "dealerId": 746193740,
+//       "name": "Bob's Cars",
+//       "vehicles": [
+//         {
+//           "vehicleId": 1520878715,
+//           "year": 2016,
+//           "make": "Honda",
+//           "model": "Accord"
+//         },
+//         ...
+//       ]
+//     },
+//     ...
+//   ]
+// }
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### validateInventory(datasetId, inventory)
 
-### Code Splitting
+```js
+import DatasetApi from './dealer-inventory-api/dataSet'
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+const datasetId = await DatasetApi.getId()
+const inventory = await DatasetApi.inventory(datasetId)
+await DatasetApi.validateInventory(datasetId, inventory)
 
-### Analyzing the Bundle Size
+//  { "success": true }
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Vehicle API
 
-### Making a Progressive Web App
+### index(datasetId)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+import VehicleApi from './dealer-inventory-api/vehicle'
 
-### Advanced Configuration
+await VehicleApi.index(datasetId)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// [2302402, 1020102, 12001024, ...]
+```
 
-### Deployment
+### show(datasetId, vehicleId)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+import VehicleApi from './dealer-inventory-api/vehicle'
 
-### `npm run build` fails to minify
+const vehicleIds = await VehicleApi.index(datasetId)
+await VehicleApi.show(vehicleId[0])
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+//  {
+//   "vehicleId": 0,
+//   "year": 0,
+//   "make": "string",
+//   "model": "string"
+//  }
+```
+
+## Dealer API
+
+### show(datasetId, dealerId)
+
+```js
+import DealerApi from './dealer-inventory-api/dealer'
+import VehicleApi from './dealer-inventory-api/vehicle'
+
+const vehicleIds = await VehicleApi.index(datasetId)
+const vehicle = await VehicleApi.show(vehicleId[0])
+await DealerApi.show(datasetId, vehicle.dealerId)
+
+//  { "dealerId": 12912939, name: "Bob's Dealership" }
+```
