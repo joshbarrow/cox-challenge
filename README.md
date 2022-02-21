@@ -6,16 +6,18 @@ In the project directory, you can run:
 
 Installs all dependencies for the project.
 
-### `yarn start`
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn spec`
+### `yarn spec a`
 
 Runs all avaiable tests for the project
+
+### `yarn spec {file path}`
+
+Runs tests for a specific spec. Example:
+
+```
+yarn spec src/spec/dataset.spec.js
+```
 
 
 # Dealer Inventory API
