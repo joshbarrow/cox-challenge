@@ -34,6 +34,8 @@ export default class DatasetApi extends Api {
       )
     }
     return await Promise.all(promises)
+console.log(promises)
+
   }
 
   static async #normalizeDealerInventory(dealerAndVehicleData) {
@@ -49,3 +51,4 @@ export default class DatasetApi extends Api {
     return { dealers: Object.values(dealers) }
   }
 }
+

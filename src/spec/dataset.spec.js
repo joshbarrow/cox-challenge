@@ -31,8 +31,11 @@ describe('DatasetApi', () => {
   describe('.validateInventory', () => {
     it('returns successful response', async () => {
       const datasetId = await DatasetApi.getId()
+      console.log("DatasetId: ", datasetId);
       const inventory = await DatasetApi.inventory(datasetId)
+      console.log("Inventory: ", inventory);
       const response = await DatasetApi.validateInventory(datasetId, inventory)
+      console.log("Final Response: ", response);
       expect(response.success).toBe(true)
     })
   })
